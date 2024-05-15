@@ -6,8 +6,8 @@ import ImageLoader from '../Components/ImageLoader';
 import axios from 'axios';
 import { Autocomplete, TextField } from '@mui/material';
 
-const contest_id = 2;
-const territory_id = "NewYork, NY";//pass this value through frontend 
+// const contest_id = 2;
+// const territory_id = "NewYork, NY";//pass this value through frontend 
 
 const stores = [
   "VZW CSOK // 507 Us Hwy 77 Unit 1100 - Waxahachie",
@@ -25,6 +25,22 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const [store, setStore] = useState('');
+
+  // Function to get query parameters from the URL
+  const getQueryParams = (query) => {
+    return query
+      ? (/^[?#]/.test(query) ? query.slice(1) : query)
+          .split('&')
+          .reduce((params, param) => {
+            const [key, value] = param.split('=');
+            params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+            return params;
+          }, {})
+      : {};
+  };
+
+  const queryParams = getQueryParams(location.search);
+  const { territory_id, contest_id } = queryParams;
 
   return (
     <div className="bg-white min-h-screen w-full flex flex-col justify-start items-center">
@@ -56,7 +72,7 @@ const HomePage = () => {
 
         <div className='max-w-2xl px-4 mx-auto mt-6 text-center'>
           <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left'>
-            Porem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. quent per conubia nostra, per inceptos himenaeos
+           In this quiz, Each Question is consists of 50 points. This quiz can be played only once.
             <span className='text-[#4285F4]'>qui temporibus provident quis</span>
           </p>
           <button
