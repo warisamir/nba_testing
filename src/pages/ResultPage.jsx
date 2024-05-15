@@ -30,7 +30,7 @@ const ResultPage = () => {
       try {
         const response = await axios.get(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
         // const response = await axios.get('https://gcptest.testexperience.site/getContestRewards_testing?contest_id=1&territory_id=Calgary North, AB&user_points=300');
-        console.log(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
+        // console.log(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
         setRewardsData(response.data);
         console.log(response.data);
       } catch (error) {
