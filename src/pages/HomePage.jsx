@@ -7,19 +7,6 @@ import axios from 'axios';
 import { Autocomplete, TextField } from '@mui/material';
 
 const contest_id = 2;
-const territory_id = "NewYork, NY";
-
-const stores = [
-  "VZW CSOK // 507 Us Hwy 77 Unit 1100 - Waxahachie",
-  "TMO COR // 3050 Camp Wisdom Rd Suite 100 - Grand Prairie",
-  "TMO COR // 109 E. Fm 544 Suite 105 - Murphy",
-  "TMO COR // 2501 W Airport Freeway Suite 100 - Irving",
-  "VZW WirelessZone // 404 N Interstate 35 E Ste 110 - Lancaster",
-  "TMO COR // 9310 Forest Lane - Dallas",
-  "TMO COR // 8180 Park Ln Ste C349 - Dallas",
-  "TMO COR // 3703 Camp Wisdom Rd - Dallas",
-  "VZW COR // 7190 Skillman St Ste 100 - Dallas",
-]
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
