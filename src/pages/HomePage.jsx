@@ -6,8 +6,8 @@ import ImageLoader from '../Components/ImageLoader';
 import axios from 'axios';
 import { Autocomplete, TextField } from '@mui/material';
 
-const contest_id = 1;
-const territory_id = "NewYork, NY";
+const contest_id = 2;
+const territory_id = "NewYork, NY";//pass this value through frontend 
 
 const stores = [
   "VZW CSOK // 507 Us Hwy 77 Unit 1100 - Waxahachie",
