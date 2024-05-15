@@ -20,11 +20,12 @@ const ResultPage = () => {
   const query = useQuery();
 
   const handleClick = () => {
-    // Go back to Flutter app
+    window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
+    Toaster.postMessage('buttonClicked');
   }
 
   const [rewardsData, setRewardsData] = useState();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,7 +38,7 @@ const ResultPage = () => {
         console.error(error);
       }
     };
-    
+
     fetchData();
   }, []);
 
