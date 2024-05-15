@@ -72,8 +72,8 @@ const HomePage = () => {
 
         <div className='max-w-2xl px-4 mx-auto mt-6 text-center'>
           <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left'>
-           In this quiz, Each Question is consists of 50 points. This quiz can be played only once.
-            <span className='text-[#4285F4]'>qui temporibus provident quis</span>
+          You will get 15 seconds to answer each question ,Each question awards 50 points
+            <span className='text-[#4285F4]'>You can only attempt the quiz once</span>
           </p>
           <button
             disabled={store === ''}
