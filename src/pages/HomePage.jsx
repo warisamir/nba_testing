@@ -61,7 +61,7 @@ const HomePage = () => {
   // const { territory_id, contest_id } = queryParams;
 
   return (
-    <div className="bg-white min-h-screen w-full flex flex-col justify-start items-center">
+    <div className="bg-white font-googleSans min-h-screen w-full flex flex-col justify-start items-center">
       <header className='w-full py-2 gap-2 flex flex-col'>
         <div className='w-full max-w-2xl mx-auto'>
           <ImageLoader src={WelcomeScreenPoster} />

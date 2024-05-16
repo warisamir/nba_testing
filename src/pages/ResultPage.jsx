@@ -43,7 +43,7 @@ const ResultPage = () => {
   }, []);
 
   return (
-    <div className='w-full min-h-screen relative bg-slate-50'>
+    <div className='w-full font-googleSans min-h-screen relative bg-slate-50'>
       <QuizNavbar className="fixed top-0" />
       <div className='w-full h-full absolute top-0 left-0 bg-black opacity-30 z-10'></div>
 
