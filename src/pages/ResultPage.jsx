@@ -6,6 +6,7 @@ import { ImageLoader, QuizNavbar } from '../Components';
 import GoogleLogo from '/Google Logo.png';
 import CongoCard from '/Congo Card.png'
 import { IoIosArrowForward } from "react-icons/io";
+import Confetti from 'react-confetti';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -16,6 +17,8 @@ const ResultPage = () => {
   const attemptedAnswers = useSelector((state) => state.quiz.attempted);
 
   const navigate = useNavigate();
+
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const query = useQuery();
 
@@ -30,15 +33,23 @@ const ResultPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
+        setRewardsData(response.data);
         // const response = await axios.get('https://gcptest.testexperience.site/getContestRewards_testing?contest_id=1&territory_id=Calgary North, AB&user_points=300');
         // console.log(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
-        setRewardsData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-
+    const toggleConfetti = async () => {
+      setTimeout(() => {
+        setShowConfetti(true);
+      }, 1500);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 6500);
+    }
+    toggleConfetti();
     fetchData();
   }, []);
 
@@ -47,10 +58,26 @@ const ResultPage = () => {
       <QuizNavbar className="fixed top-0" />
       <div className='w-full h-full absolute top-0 left-0 bg-black opacity-30 z-10'></div>
 
-      <div className='h-60 w-60 rounded-full absolute top-[15%] left-[50%] translate-x-[-50%] z-50 overflow-hidden'>
-        <ImageLoader src={rewardsData?.url} alt="Coin" />
-        {/* <img src={rewardsData?.url} className='object-cover' /> */}
-        {/* <p className='absolute top-[55%] left-[50%] translate-x-[-40%] text-black font-bold text-4xl'>10G</p> */}
+      <div className='h-60 w-60 bg-white rounded-lg absolute top-[15%] left-[50%] translate-x-[-50%] z-50 overflow-hidden flex justify-center items-center'>
+        <img src='/rewardPage/lower right.png' className='absolute object-cover bottom-0 right-0 animate-goBottomRight z-40' />
+        <img src='/rewardPage/upper right.png' className='absolute object-cover top-0 right-0 animate-goTopLeft z-40' />
+        <img src='/rewardPage/left.png' className='absolute object-cover top-0 left-0 animate-goLeft z-40' />
+        <img src='rewardPage/yellow dot.png' className='absolute w-16 h-16 right-[10%] top-[45%] animate-fadeOut z-40' />
+        {/* <ImageLoader src={rewardsData?.url} alt="Coin" /> */}
+        <div className='w-full h-full flex justify-center items-center animate-popup'>
+          {showConfetti && <Confetti
+            className='w-full h-full animate-confetti z-0'
+            // confettiSource={{
+            //   x: 200,
+            //   y: 200,
+            // }}
+          />}
+          <img src='/rewardPage/coin.png' className='h-40 w-40 z-10' />
+          <div className='absolute flex gap-2 justify-center items-center bg-white bottom-8 px-4 py-1 border-2 rounded-full z-10'>
+            <img src={GoogleLogo} alt='Google' className='h-4 w-4' />
+            <p className='text-lg font-bold'>{query.get("user_points")}</p>
+          </div>
+        </div>
       </div>
 
       <div className='w-full absolute bottom-0 flex flex-col justify-center items-center z-50 bg-white px-4 pt-4 rounded-t-2xl'>
@@ -62,8 +89,8 @@ const ResultPage = () => {
         </div>
 
         <div className='mt-4'>
-          <h1 className='text-2xl font-medium'>+{query.get("user_points")} Points</h1>
-          <p className='text-sm font-medium mt-1'>You earned {query.get("user_points")} points, redeem them in store.</p>
+          <h1 className='text-2xl font-medium'>Congratulations!</h1>
+          <p className='text-sm font-medium mt-1'>You answered {query.get("user_points")/50} questions correctly, and recieved {query.get("user_points")} points.</p>
         </div>
 
         <div className='my-10'>

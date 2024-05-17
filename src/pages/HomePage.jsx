@@ -24,18 +24,18 @@ const HomePage = () => {
   const [territoryId, setTerritoryId] = useState('');
 
   // console.log(contestId);
-  
+
   useEffect(() => {
     const getStores = async () => {
       const territoryIdValue = query.get("territory_id");
       setTerritoryId(territoryIdValue);
       // console.log(territoryIdValue); // Log the value before setting the state
-    
+
       try {
         const response = await axios.get(`https://stores-test-dot-odin-321417.uc.r.appspot.com/api/data/stores?territory=${territoryIdValue}`);
         setStoreData(response.data);
+        console.log(response.data);
         // console.log(response.data); // Log the response data after awaiting the Axios call
-        setStoreData(response.data); // Update the state with response data if needed
       } catch (error) {
         console.error("Error fetching stores:", error);
       }
@@ -87,13 +87,13 @@ const HomePage = () => {
             renderInput={(params) => <TextField {...params} label="Store" />}
           />
         </div>
-        
+
         <div className='max-w-2xl px-4 mx-auto mt-6 text-center'>
           <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left'>
-          • You will get 15 seconds to answer each question.<br/>
-          • Each question awards 50 points.<br/>
-          • Attempt this quiz with the RSAs in store.<br/>
-          •{" "}<span className='text-[#4285F4]'>You can attempt this quiz multiple times.</span>
+            • You will get 15 seconds to answer each question.<br />
+            • Each question awards 50 points.<br />
+            • Attempt this quiz with the RSAs in store.<br />
+            •{" "}<span className='text-[#4285F4]'>You can attempt this quiz multiple times.</span>
           </p>
           <button
             disabled={store === ''}
