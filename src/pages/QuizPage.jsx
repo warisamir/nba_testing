@@ -139,7 +139,7 @@ const QuizPage = () => {
           <div className='flex flex-col gap-2 mt-2'>
             <div className='flex justify-between font-medium text-slate-400'>
               <p className='text-sm'>{currentQuestion?.index}/10</p>
-              <p className='text-sm'>(10 Points)</p>
+              <p className='text-sm'>(50 Points)</p>
             </div>
 
             <p className='font-semibold text-center my-2'>
