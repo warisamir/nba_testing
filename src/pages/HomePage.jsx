@@ -105,9 +105,9 @@ const HomePage = () => {
             {/* • Attempt this quiz with the RSAs in store.<br />
             •{" "}<span className='text-[#4285F4]'>You can attempt this quiz multiple times.</span> */}
           </p>
-          <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left mt-4'>
+          {/* <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left mt-4'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam iusto necessitatibus animi enim. <span className='text-[#4285F4]'>illum libero voluptatum, in ullam natus a.</span>
-          </p>
+          </p> */}
           <button
             disabled={store === '' || store === null || alreadyTaken}
             onClick={() => navigate(`/quiz?territory_id=${territoryId}&contest_id=${contest_id}&store_name=${store}`)}
