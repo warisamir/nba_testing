@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Autocomplete, TextField } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { QuizNavbar } from '../Components';
 
 const contest_id = 2;
 
@@ -53,6 +54,7 @@ const HomePage = () => {
   }, []);
   return (
     <div className="bg-white font-googleSans min-h-screen w-full flex flex-col justify-start items-center pb-10">
+      <QuizNavbar />
       <header className='w-full py-2 gap-2 flex flex-col'>
         <div className='w-full max-w-2xl mx-auto'>
           <ImageLoader src={WelcomeScreenPoster} />
