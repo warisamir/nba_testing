@@ -65,7 +65,7 @@ const HomePage = () => {
             Welcome to
           </h2>
           <h1 className='font-semibold text-2xl sm:text-3xl md:text-5xl -mt-0.5 max-w-lg mx-auto'>
-            The first RSA Facing Pixel AI Quiz
+            The first RSA Facing Pixel AI Quiz (testing)
           </h1>
           <p className='font-medium text-sm md:text-xl text-zinc-600 mt-3 leading-tight max-w-lg mx-auto'>
             You can attempt this quiz multiple times with the RSAs in store.
