@@ -34,7 +34,7 @@ const HomePage = () => {
 
       try {
         const response1 = await axios.get(`https://stores-test-dot-odin-321417.uc.r.appspot.com/api/data/stores?territory=${query.get("territory_id")}`);
-        const response2 = await axios.get(`https://gcptest.testexperience.site/fetch_quiztaken_rsa_testing?territory_id=${query.get("territory_id")}&contest_id=${query.get("contest_id")}`);
+        const response2 = await axios.get(`https://gcptest.testexperience.site/fetch_quiztaken_rsa_testing?territory_id=${query.get("territory_id")}&contest_id=2`);
         console.log("All Stores : ", response1.data);
         console.log("Stores given quiz : ", response2.data.existingStoreNames);
 
