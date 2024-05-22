@@ -21,7 +21,7 @@ const HomePage = () => {
   const [store, setStore] = useState('');
   const [alreadyTaken, setAlreadyTaken] = useState(false);
   const [allStores, setAllStores] = useState([]);
-  const [existingStores, setExistingStores] = useState([]);
+  // const [existingStores, setExistingStores] = useState([]);
 
   const query = useQuery();
 
@@ -35,15 +35,15 @@ const HomePage = () => {
 
       try {
         const response1 = await axios.get(`https://stores-test-dot-odin-321417.uc.r.appspot.com/api/data/stores?territory=${query.get("territory_id")}`);
-        const response2 = await axios.get(`https://gcptest.testexperience.site/fetch_quiztaken_rsa_testing?territory_id=${query.get("territory_id")}&contest_id=2`);
+        // const response2 = await axios.get(`https://gcptest.testexperience.site/fetch_quiztaken_rsa_testing?territory_id=${query.get("territory_id")}&contest_id=2`);
         console.log("All Stores : ", response1.data);
-        console.log("Stores given quiz : ", response2.data.existingStoreNames);
+        // console.log("Stores given quiz : ", response2.data.existingStoreNames);
 
         const storeNames = response1.data;
-        const existingStoreNames = response2.data.existingStoreNames;
+        // const existingStoreNames = response2.data.existingStoreNames;
 
         setAllStores(storeNames);
-        setExistingStores(existingStoreNames);
+        // setExistingStores(existingStoreNames);
 
       } catch (error) {
         console.error("Error fetching stores:", error);
@@ -81,20 +81,21 @@ const HomePage = () => {
             options={allStores}
             sx={{ width: 300 }}
             onChange={(event, newValue) => {
-              if (existingStores.includes(newValue)) {
-                Swal.fire({
-                  title: "Error",
-                  text: "You've already given the quiz once!",
-                  icon: "error",
-                  confirmButtonColor: "#4285F4",
-                });
-                // toast.error('You have already given the quiz!');
-                setAlreadyTaken(true);
-                console.log("Already taken");
-              } else {
-                setAlreadyTaken(false);
-                setStore(newValue);
-              }
+              // if (existingStores.includes(newValue)) {
+              //   Swal.fire({
+              //     title: "Error",
+              //     text: "You've already given the quiz once!",
+              //     icon: "error",
+              //     confirmButtonColor: "#4285F4",
+              //   });
+              //   // toast.error('You have already given the quiz!');
+              //   setAlreadyTaken(true);
+              //   console.log("Already taken");
+              // } else {
+              //   setAlreadyTaken(false);
+              //   setStore(newValue);
+              // }
+              setStore(newValue);
             }}
             renderInput={(params) => <TextField {...params} label="Store" />}
           />

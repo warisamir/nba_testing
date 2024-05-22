@@ -14,28 +14,30 @@ const QuizPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const query = useQuery();
-  
+
   const status = useSelector((state) => state.quiz.status);
   const quizData = useSelector((state) => state.quiz.quizData);
   const currentIndex = useSelector((state) => state.quiz.index);
   const score = useSelector((state) => state.quiz.correct);
-  
+
   const [answered, setAnswered] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [timer, setTimer] = useState(null);
-  const [remainingTime, setRemainingTime] = useState(15);
+  const [remainingTime, setRemainingTime] = useState(25);
   const [territoryId, setTerritoryId] = useState('');
   const [contestId, setContestId] = useState('');
   const [storeName, setStoreName] = useState('');
-  
+
+  const [selectedOption, setSelectedOption] = useState(null)
+
   // Fetching Quiz Data
   useEffect(() => {
     dispatch(fetchQuizData());
   }, []);
-  
+
   // Fetching the current question
   useEffect(() => {
     if (quizData.length > 0) {
@@ -43,7 +45,7 @@ const QuizPage = () => {
       // console.log(currentQuestion);
     }
   }, [quizData, currentIndex]);
-  
+
   // Fetching the correct question
   useEffect(() => {
     if (currentQuestion !== null) {
@@ -51,21 +53,21 @@ const QuizPage = () => {
       // console.log(correctAnswer);
     }
   }, [currentQuestion]);
-  
-  
+
+
   const handleNextQuestion = () => {
     if (currentIndex === quizData.length) {
-      navigate(`/result?territory_id=${territoryId}&contest_id=${contestId}&user_points=${score*50}&store_name=${storeName}`);
+      navigate(`/result?territory_id=${territoryId}&contest_id=${contestId}&user_points=${score * 50}&store_name=${storeName}`);
     } else {
       dispatch(nextQuestion());
       setSelectedAnswer('');
-      setRemainingTime(15);
+      setRemainingTime(25);
       setAnswered(false);
       setIsCorrectAnswer(false);
       clearInterval(timer);
     }
   };
-  
+
   useEffect(() => {
     setTerritoryId(query.get("territory_id"));
     setContestId(query.get("contest_id"));
@@ -80,19 +82,19 @@ const QuizPage = () => {
           if (prevTime === 0) {
             clearInterval(interval);
             handleNextQuestion();
-            return 15;
+            return 25;
           }
           return prevTime - 1;
         });
       }, 1000);
-      
+
       return () => {
         clearInterval(interval);
       }
     }
   }, [answered, quizData, currentIndex]);
 
-  const handleOptionClick = (selected) => {
+  const handleSubmit = (selected) => {
     setAnswered(true);
     setSelectedAnswer(selected);
     if (selected === correctAnswer) {
@@ -101,6 +103,7 @@ const QuizPage = () => {
     } else {
       setIsCorrectAnswer(false);
     }
+    setSelectedOption(null);
     dispatch(addAttempted());
     setRemainingTime(4);
     const newInterval = setInterval(() => {
@@ -108,7 +111,7 @@ const QuizPage = () => {
         if (prevTime === 0) {
           clearInterval(newInterval);
           handleNextQuestion();
-          return 15;
+          return 25;
         }
         return prevTime - 1;
       });
@@ -151,13 +154,14 @@ const QuizPage = () => {
                 <button
                   disabled={answered}
                   className={`w-full flex justify-start items-center gap-2 px-3 py-1 transition border-2
+                    ${(selectedOption && option === selectedOption) ? 'border-yellow-500 border-2 rounded-lg bg-gradient-to-b from-yellow-100 via-yellow-100 to-transparent' : ''}
                     ${(answered && isCorrectAnswer && option === correctAnswer) ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
                     ${(answered && option === selectedAnswer) && option !== correctAnswer ? 'border-red-500 border-2 rounded-lg bg-gradient-to-b from-red-100 via-red-100 to-transparent' : ''}
                     ${(answered && !isCorrectAnswer) && option === correctAnswer ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
                   `}
                   key={i}
                   type='button'
-                  onClick={() => handleOptionClick(option)}
+                  onClick={() => setSelectedOption(option)}
                 >
                   <p className='font-bold'>{i + 1}.</p>
                   <p className='text-left'>{option}</p>
@@ -165,13 +169,23 @@ const QuizPage = () => {
               ))}
             </form>
 
-            <button
-              onClick={handleSkip}
-              className='bg-gray-100 mx-auto text-sm px-5 py-2 rounded-full shadow-lg mt-2'
-            // disabled={answered}
-            >
-              Skip to Next
-            </button>
+            <div className='flex flex-col justify-center items-center gap-2 px-2 w-full mb-6'>
+              <button
+                onClick={() => handleSubmit(selectedOption)}
+                className='bg-[#4285F4] text-white mx-auto px-5 py-2 rounded-full shadow-lg mt-2'
+              // disabled={answered}
+              >
+                Submit
+              </button>
+
+              <button
+                onClick={handleSkip}
+                className='bg-gray-100 mx-auto text-sm px-5 py-2 rounded-full shadow-lg mt-2 border-[1px] border-[#4285F4]'
+              // disabled={answered}
+              >
+                Go to Next Question
+              </button>
+            </div>
           </div>
         </>}
       </main>
