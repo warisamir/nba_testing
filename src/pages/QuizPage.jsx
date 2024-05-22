@@ -178,13 +178,13 @@ const QuizPage = () => {
                 Submit
               </button>}
 
-              <button
+              {/* <button
                 onClick={handleSkip}
                 className='bg-gray-100 mx-auto text-sm px-5 py-2 rounded-full shadow-lg mt-2 border-[1px] border-[#4285F4]'
               // disabled={answered}
               >
                 Go to Next Question
-              </button>
+              </button> */}
             </div>
           </div>
         </>}
