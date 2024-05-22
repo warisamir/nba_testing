@@ -81,18 +81,36 @@ const QuizPage = () => {
         setRemainingTime((prevTime) => {
           if (prevTime === 0) {
             clearInterval(interval);
-            handleNextQuestion();
-            return 25;
+            setRemainingTime(4);
+            setAnswered(true);
+            setSelectedAnswer('');  // No answer selected
+            dispatch(addAttempted());
+            
+            // Start a new interval for the 4 seconds to show the correct answer
+            const newInterval = setInterval(() => {
+              setRemainingTime((prevTime) => {
+                if (prevTime === 0) {
+                  clearInterval(newInterval);
+                  handleNextQuestion();
+                  return 25;
+                }
+                return prevTime - 1;
+              });
+            }, 1000);
+            setTimer(newInterval);
+            
+            return 4;  // Set the remaining time to 4 seconds
           }
           return prevTime - 1;
         });
       }, 1000);
-
+  
       return () => {
         clearInterval(interval);
-      }
+      };
     }
   }, [answered, quizData, currentIndex]);
+  
 
   const handleSubmit = (selected) => {
     setAnswered(true);
