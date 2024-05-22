@@ -31,7 +31,7 @@ const QuizPage = () => {
   const [contestId, setContestId] = useState('');
   const [storeName, setStoreName] = useState('');
 
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedOption, setSelectedOption] = useState(null);
 
   // Fetching Quiz Data
   useEffect(() => {
@@ -170,13 +170,13 @@ const QuizPage = () => {
             </form>
 
             <div className='flex flex-col justify-center items-center gap-2 px-2 w-full mb-6'>
-              <button
+              {selectedOption !== null && <button
                 onClick={() => handleSubmit(selectedOption)}
-                className='bg-[#4285F4] text-white mx-auto px-5 py-2 rounded-full shadow-lg mt-2'
-              // disabled={answered}
+                className='bg-[#4285F4] disabled:bg-blue-400 text-white mx-auto px-5 py-2 rounded-full shadow-lg mt-2 transition'
+                // disabled={selectedOption === null}
               >
                 Submit
-              </button>
+              </button>}
 
               <button
                 onClick={handleSkip}
