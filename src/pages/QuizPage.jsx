@@ -57,7 +57,9 @@ const QuizPage = () => {
 
   const handleNextQuestion = () => {
     if (currentIndex === quizData.length) {
-      navigate(`/result?territory_id=${territoryId}&contest_id=${contestId}&user_points=${score * 50}&store_name=${storeName}`);
+      setTimeout(() => {
+        navigate(`/result?territory_id=${territoryId}&contest_id=${contestId}&user_points=${score * 50}&store_name=${storeName}`);
+      }, 500);
     } else {
       dispatch(nextQuestion());
       setSelectedAnswer('');
@@ -121,21 +123,27 @@ const QuizPage = () => {
     } else {
       setIsCorrectAnswer(false);
     }
-    setSelectedOption(null);
+  
     dispatch(addAttempted());
+    setSelectedOption(null);
     setRemainingTime(3);
     const newInterval = setInterval(() => {
       setRemainingTime((prevTime) => {
         if (prevTime === 0) {
           clearInterval(newInterval);
-          handleNextQuestion();
+          if (currentIndex === quizData.length) {
+            navigate(`/result?territory_id=${territoryId}&contest_id=${contestId}&user_points=${(score + (selected === correctAnswer ? 1 : 0)) * 50}&store_name=${storeName}`);
+          } else {
+            handleNextQuestion();
+          }
           return 25;
         }
         return prevTime - 1;
       });
     }, 1000);
-    setTimer(newInterval)
+    setTimer(newInterval);
   };
+  
 
   const handleSkip = () => {
     handleNextQuestion();

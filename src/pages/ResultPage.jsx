@@ -15,6 +15,7 @@ const useQuery = () => {
 const ResultPage = () => {
   const correctAnswers = useSelector((state) => state.quiz.correct);
   const attemptedAnswers = useSelector((state) => state.quiz.attempted);
+  console.log(correctAnswers);
 
   const navigate = useNavigate();
 
