@@ -81,12 +81,12 @@ const QuizPage = () => {
         setRemainingTime((prevTime) => {
           if (prevTime === 0) {
             clearInterval(interval);
-            setRemainingTime(4);
+            setRemainingTime(3);
             setAnswered(true);
             setSelectedAnswer('');  // No answer selected
             dispatch(addAttempted());
             
-            // Start a new interval for the 4 seconds to show the correct answer
+            // Start a new interval for the 3 seconds to show the correct answer
             const newInterval = setInterval(() => {
               setRemainingTime((prevTime) => {
                 if (prevTime === 0) {
@@ -99,7 +99,7 @@ const QuizPage = () => {
             }, 1000);
             setTimer(newInterval);
             
-            return 4;  // Set the remaining time to 4 seconds
+            return 3;  // Set the remaining time to 3 seconds
           }
           return prevTime - 1;
         });
@@ -123,7 +123,7 @@ const QuizPage = () => {
     }
     setSelectedOption(null);
     dispatch(addAttempted());
-    setRemainingTime(4);
+    setRemainingTime(3);
     const newInterval = setInterval(() => {
       setRemainingTime((prevTime) => {
         if (prevTime === 0) {
