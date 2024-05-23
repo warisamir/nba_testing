@@ -26,7 +26,7 @@ const QuizPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [timer, setTimer] = useState(null);
-  const [remainingTime, setRemainingTime] = useState(25);
+  const [remainingTime, setRemainingTime] = useState(35);
   const [territoryId, setTerritoryId] = useState('');
   const [contestId, setContestId] = useState('');
   const [storeName, setStoreName] = useState('');
@@ -63,7 +63,7 @@ const QuizPage = () => {
     } else {
       dispatch(nextQuestion());
       setSelectedAnswer('');
-      setRemainingTime(25);
+      setRemainingTime(35);
       setAnswered(false);
       setIsCorrectAnswer(false);
       clearInterval(timer);
@@ -83,25 +83,25 @@ const QuizPage = () => {
         setRemainingTime((prevTime) => {
           if (prevTime === 0) {
             clearInterval(interval);
-            setRemainingTime(3);
+            setRemainingTime(1);
             setAnswered(true);
             setSelectedAnswer('');  // No answer selected
             dispatch(addAttempted());
             
-            // Start a new interval for the 3 seconds to show the correct answer
+            // Start a new interval for the 4 seconds to show the correct answer
             const newInterval = setInterval(() => {
               setRemainingTime((prevTime) => {
                 if (prevTime === 0) {
                   clearInterval(newInterval);
                   handleNextQuestion();
-                  return 25;
+                  return 35;
                 }
                 return prevTime - 1;
               });
             }, 1000);
             setTimer(newInterval);
             
-            return 3;  // Set the remaining time to 3 seconds
+            return 1;  // Set the remaining time to 3 seconds
           }
           return prevTime - 1;
         });
@@ -126,7 +126,7 @@ const QuizPage = () => {
   
     dispatch(addAttempted());
     setSelectedOption(null);
-    setRemainingTime(3);
+    setRemainingTime(1);
     const newInterval = setInterval(() => {
       setRemainingTime((prevTime) => {
         if (prevTime === 0) {
@@ -136,7 +136,7 @@ const QuizPage = () => {
           } else {
             handleNextQuestion();
           }
-          return 25;
+          return 35;
         }
         return prevTime - 1;
       });
