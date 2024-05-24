@@ -161,62 +161,64 @@ const QuizPage = () => {
   return (
     <div className='w-full font-googleSans min-h-screen bg-slate-50'>
       <QuizNavbar />
-      <main className='w-full h-full mt-6 max-w-2xl mx-auto px-4 sm:px-6 md:px-8'>
-        {currentQuestion && <>
-          <Timer time={remainingTime} imgsrc={currentQuestion.imageUrl} />
-
-          <div className='flex flex-col gap-2 mt-2'>
-            <div className='flex justify-between font-medium text-slate-400'>
-              <p className='text-sm'>{currentQuestion?.index}/10</p>
-              <p className='text-sm'>(50 Points)</p>
+      <main className='w-full h-full min-h-screen mt-6 max-w-2xl mx-auto px-4 sm:px-6 md:px-8 lg:max-w-[1440px] flex justify-center items-center'>
+        {currentQuestion && (
+          <>
+            <div className='flex flex-col xl:flex-row xl:gap-8 mt-2 xl:w-full xl:justify-center xl:items-center'>
+              <div className='xl:w-1/2'>
+                <Timer time={remainingTime} imgsrc={currentQuestion.imageUrl} />
+              </div>
+              <div className='xl:w-1/2 flex flex-col gap-2 mt-4 xl:mt-0'>
+                <div className='flex justify-between font-medium text-slate-400'>
+                  <p className='text-sm xl:text-base'>{currentQuestion?.index}/10</p>
+                  <p className='text-sm xl:text-base'>(50 Points)</p>
+                </div>
+  
+                <p className='font-semibold text-center my-2 text-base xl:text-lg'>
+                  {currentQuestion.question}
+                </p>
+  
+                <form className='flex flex-col gap-2.5 justify-start items-start w-full'>
+                  {currentQuestion.options.map((option, i) => (
+                    <button
+                      disabled={answered}
+                      className={`w-full flex justify-start items-center gap-2 px-3 py-1 transition border-2
+                        ${(selectedOption && option === selectedOption) ? 'border-yellow-500 border-2 rounded-lg bg-gradient-to-b from-yellow-100 via-yellow-100 to-transparent' : ''}
+                        ${(answered && isCorrectAnswer && option === correctAnswer) ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
+                        ${(answered && option === selectedAnswer) && option !== correctAnswer ? 'border-red-500 border-2 rounded-lg bg-gradient-to-b from-red-100 via-red-100 to-transparent' : ''}
+                        ${(answered && !isCorrectAnswer) && option === correctAnswer ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
+                      `}
+                      key={i}
+                      type='button'
+                      onClick={() => setSelectedOption(option)}
+                    >
+                      <p className='font-bold text-base xl:text-lg'>{i + 1}.</p>
+                      <p className='text-left text-base xl:text-lg'>{option}</p>
+                    </button>
+                  ))}
+                </form>
+  
+                <div className='flex flex-col justify-center items-center gap-2 px-2 w-full mb-6'>
+                  <button
+                    onClick={() => handleSubmit(selectedOption)}
+                    className='bg-[#4285F4] disabled:bg-blue-400 text-white mx-auto px-5 py-2 rounded-full shadow-lg mt-2 transition text-base xl:text-lg'
+                    disabled={selectedOption === null}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <p className='font-semibold text-center my-2'>
-              {currentQuestion.question}
-            </p>
-
-            <form className='flex flex-col gap-2.5 justify-start items-start w-full'>
-              {currentQuestion.options.map((option, i) => (
-                <button
-                  disabled={answered}
-                  className={`w-full flex justify-start items-center gap-2 px-3 py-1 transition border-2
-                    ${(selectedOption && option === selectedOption) ? 'border-yellow-500 border-2 rounded-lg bg-gradient-to-b from-yellow-100 via-yellow-100 to-transparent' : ''}
-                    ${(answered && isCorrectAnswer && option === correctAnswer) ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
-                    ${(answered && option === selectedAnswer) && option !== correctAnswer ? 'border-red-500 border-2 rounded-lg bg-gradient-to-b from-red-100 via-red-100 to-transparent' : ''}
-                    ${(answered && !isCorrectAnswer) && option === correctAnswer ? 'border-green-500 border-2 rounded-lg bg-gradient-to-b from-green-100 via-green-100 to-transparent' : ''}
-                  `}
-                  key={i}
-                  type='button'
-                  onClick={() => setSelectedOption(option)}
-                >
-                  <p className='font-bold'>{i + 1}.</p>
-                  <p className='text-left'>{option}</p>
-                </button>
-              ))}
-            </form>
-
-            <div className='flex flex-col justify-center items-center gap-2 px-2 w-full mb-6'>
-              <button
-                onClick={() => handleSubmit(selectedOption)}
-                className='bg-[#4285F4] disabled:bg-blue-400 text-white mx-auto px-5 py-2 rounded-full shadow-lg mt-2 transition'
-                disabled={selectedOption === null}
-              >
-                Submit
-              </button>
-
-              {/* <button
-                onClick={handleSkip}
-                className='bg-gray-100 mx-auto text-sm px-5 py-2 rounded-full shadow-lg mt-2 border-[1px] border-[#4285F4]'
-              // disabled={answered}
-              >
-                Go to Next Question
-              </button> */}
-            </div>
-          </div>
-        </>}
+          </>
+        )}
       </main>
     </div>
   )
+  
+  
+  
+  
+  
 }
 
 export default QuizPage
