@@ -225,11 +225,6 @@ const QuizPage = () => {
       </main>
     </div>
   )
-
-
-
-
-
 }
 
 export default QuizPage
