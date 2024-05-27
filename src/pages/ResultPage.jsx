@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ImageLoader, QuizNavbar } from '../Components';
 import GoogleLogo from '/Google Logo.png';
-import CongoCard from '/Congo Card.png'
+import CongoCard from '/Congo Card.png';
 import { IoIosArrowForward } from "react-icons/io";
 import Confetti from 'react-confetti';
 
@@ -13,36 +13,42 @@ const useQuery = () => {
 }
 
 const ResultPage = () => {
+  const query = useQuery();
   const correctAnswers = useSelector((state) => state.quiz.correct);
   const attemptedAnswers = useSelector((state) => state.quiz.attempted);
-  console.log(correctAnswers);
-
+  const resultsArray = useSelector((state) => state.quiz.quizResults);
+  const result = {
+    territory_id: query.get("territory_id"),
+    contest_id: query.get("contest_id"),
+    store_name: query.get("store_name"),
+    results: resultsArray,
+  }
+  console.log(result);
+  
   const navigate = useNavigate();
-
+  
   const [showConfetti, setShowConfetti] = useState(false);
-
-  const query = useQuery();
-
+  
+  
   const handleClick = () => {
     window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
     Toaster.postMessage('buttonClicked');
   }
 
-  const [rewardsData, setRewardsData] = useState();
+  const [rewardsData, setRewardsData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
         setRewardsData(response.data);
-        // const response = await axios.get('https://gcptest.testexperience.site/getContestRewards_testing?contest_id=1&territory_id=Calgary North, AB&user_points=300');
-        // console.log(`https://gcptest.testexperience.site/getContestRewards_testingStore?contest_id=${query.get("contest_id")}&territory_id=${query.get("territory_id")}&user_points=${query.get("user_points")}&store_name=${query.get("store_name")}`);
-        // console.log(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-    const toggleConfetti = async () => {
+    
+    const toggleConfetti = () => {
       setTimeout(() => {
         setShowConfetti(true);
       }, 1500);
@@ -50,6 +56,7 @@ const ResultPage = () => {
         setShowConfetti(false);
       }, 6500);
     }
+    
     toggleConfetti();
     fetchData();
   }, []);
@@ -69,7 +76,7 @@ const ResultPage = () => {
 
         <div className='mt-4'>
           <h1 className='text-2xl font-medium'>Congratulations!</h1>
-          <p className='text-sm font-medium mt-1'>You answered {query.get("user_points") / 50} questions correctly, and recieved {query.get("user_points")} points.</p>
+          <p className='text-sm font-medium mt-1'>You answered {query.get("user_points") / 50} questions correctly, and received {query.get("user_points")} points.</p>
         </div>
 
         <div className='my-10'>
@@ -88,15 +95,8 @@ const ResultPage = () => {
         <img src='/rewardPage/upper right.png' className='absolute object-cover top-0 right-0 animate-goTopLeft z-40' />
         <img src='/rewardPage/left.png' className='absolute object-cover top-0 left-0 animate-goLeft z-40' />
         <img src='rewardPage/yellow dot.png' className='absolute w-16 h-16 right-[10%] top-[45%] animate-fadeOut z-40' />
-        {/* <ImageLoader src={rewardsData?.url} alt="Coin" /> */}
         <div className='w-full h-full flex justify-center items-center animate-popup'>
-          {showConfetti && <Confetti
-            className='w-full h-full animate-confetti z-0'
-          // confettiSource={{
-          //   x: 200,
-          //   y: 200,
-          // }}
-          />}
+          {showConfetti && <Confetti className='w-full h-full animate-confetti z-0' />}
           <img src='/rewardPage/coin.png' className='h-40 w-40 sm:h-48 sm:w-48 lg:h-64 lg:w-64 z-10' />
           <div className='absolute flex gap-2 justify-center items-center bg-white bottom-8 lg:bottom-10 px-4 py-1 border-2 rounded-full z-10'>
             <img src={GoogleLogo} alt='Google' className='h-4 w-4' />
@@ -104,10 +104,8 @@ const ResultPage = () => {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }
 
-export default ResultPage
+export default ResultPage;

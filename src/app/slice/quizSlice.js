@@ -6,6 +6,7 @@ const initialState = {
     correct: 0,
     attempted: 0,
     quizData: [],
+    quizResults: [],
     status: 'idle',
     error: null,
 }
@@ -22,6 +23,12 @@ export const quizSlice = createSlice({
         },
         addAttempted: (state) => {
             state.attempted += 1;
+        },
+        resetQuizResults: (state, action) => {
+            state.quizResults = [];
+        },
+        handleQuizResults: (state, action) => {
+            state.quizResults.push(action.payload);
         },
     },
     extraReducers: (builder) => {
@@ -50,6 +57,6 @@ export const fetchQuizData = createAsyncThunk('quiz/fetchQuizData', async () => 
     }
 });
 
-export const { nextQuestion, addCorrect, addAttempted } = quizSlice.actions;
+export const { nextQuestion, addCorrect, addAttempted, resetQuizResults, handleQuizResults } = quizSlice.actions;
 
 export default quizSlice.reducer;
