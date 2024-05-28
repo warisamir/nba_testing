@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ImageLoader, QuizNavbar } from '../Components';
+import { useLocation } from 'react-router-dom';
+import { QuizNavbar } from '../Components';
 import GoogleLogo from '/Google Logo.png';
-import CongoCard from '/Congo Card.png';
 import { IoIosArrowForward } from "react-icons/io";
 import Confetti from 'react-confetti';
 
@@ -17,19 +16,9 @@ const ResultPage = () => {
   const correctAnswers = useSelector((state) => state.quiz.correct);
   const attemptedAnswers = useSelector((state) => state.quiz.attempted);
   const resultsArray = useSelector((state) => state.quiz.quizResults);
-  const result = {
-    territory_id: query.get("territory_id"),
-    contest_id: query.get("contest_id"),
-    store_name: query.get("store_name"),
-    results: resultsArray,
-  }
-  console.log(result);
-  
-  const navigate = useNavigate();
-  
+
   const [showConfetti, setShowConfetti] = useState(false);
-  
-  
+
   const handleClick = () => {
     window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
     Toaster.postMessage('buttonClicked');
@@ -47,7 +36,7 @@ const ResultPage = () => {
         console.error(error);
       }
     };
-    
+
     const toggleConfetti = () => {
       setTimeout(() => {
         setShowConfetti(true);
@@ -56,10 +45,32 @@ const ResultPage = () => {
         setShowConfetti(false);
       }, 6500);
     }
-    
+
     toggleConfetti();
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const postAnalytics = async () => {
+      const result = {
+        data: {
+          territory_id: query.get("territory_id"),
+          contest_id: query.get("contest_id"),
+          store_name: query.get("store_name"),
+          results: resultsArray,
+        }
+      }
+      console.log(result);
+      try {
+        const response = await axios.post(`https://onehub-quiz-analytics.testexperience.site/analytic/${query.get("territory_id")}`, result)
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    postAnalytics();
+  }, [])
 
   return (
     <div className='w-full font-googleSans min-h-screen relative bg-slate-50'>
