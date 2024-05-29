@@ -20,8 +20,9 @@ const ResultPage = () => {
   const [showConfetti, setShowConfetti] = useState(false);
 
   const handleClick = () => {
-    window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
-    Toaster.postMessage('buttonClicked');
+    // window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
+    // Toaster.postMessage('buttonClicked');
+    window.location.href = 'onehub://callback';
   }
 
   const [rewardsData, setRewardsData] = useState(null);
@@ -50,27 +51,27 @@ const ResultPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const postAnalytics = async () => {
-      const result = {
-        data: {
-          territory_id: query.get("territory_id"),
-          contest_id: query.get("contest_id"),
-          store_name: query.get("store_name"),
-          results: resultsArray,
-        }
-      }
-      console.log(result);
-      try {
-        const response = await axios.post(`https://onehub-quiz-analytics.testexperience.site/analytic/${query.get("territory_id")}`, result)
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  // useEffect(() => {
+  //   const postAnalytics = async () => {
+  //     const result = {
+  //       data: {
+  //         territory_id: query.get("territory_id"),
+  //         contest_id: query.get("contest_id"),
+  //         store_name: query.get("store_name"),
+  //         results: resultsArray,
+  //       }
+  //     }
+  //     console.log(result);
+  //     try {
+  //       const response = await axios.post(`https://onehub-quiz-analytics.testexperience.site/analytic/${query.get("territory_id")}`, result)
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
 
-    postAnalytics();
-  }, [])
+  //   postAnalytics();
+  // }, [])
 
   return (
     <div className='w-full font-googleSans min-h-screen relative bg-slate-50'>
