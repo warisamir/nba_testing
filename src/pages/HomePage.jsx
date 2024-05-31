@@ -70,7 +70,7 @@ const HomePage = () => {
             The first RSA Facing NBA Quiz (testing)
           </h1>
           <p className='font-medium text-sm md:text-xl text-zinc-600 mt-3 leading-tight max-w-lg mx-auto'>
-           Join the NBA playoffs with the RSAs and put your Pixel AI knowledge to use. <br/>
+           Join the NBA playoffs with the RSAs and put your Pixel AI knowledge to use.
             You can attempt this quiz multiple times with the RSAs in store
           </p>
         </div>
