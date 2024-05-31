@@ -70,7 +70,8 @@ const HomePage = () => {
             The first RSA Facing NBA Quiz (testing)
           </h1>
           <p className='font-medium text-sm md:text-xl text-zinc-600 mt-3 leading-tight max-w-lg mx-auto'>
-            You can attempt this quiz multiple times with the RSAs in store.
+           Join the NBA playoffs with the RSAs and put your Pixel AI knowledge to use. <br/>
+            You can attempt this quiz multiple times with the RSAs in store
           </p>
         </div>
 
@@ -89,8 +90,9 @@ const HomePage = () => {
 
         <div className='max-w-2xl px-4 mx-auto mt-6 text-center'>
           <p className='text-xs md:text-lg tracking-tight leading-tight text-zinc-500 text-left'>
-            • You will get 15 seconds to answer each question.<br />
-            • Each question awards 50 points.<br />
+            • Attempt this quiz on your Pixel Tablet only.<br />
+            • You will get 35 seconds to answer each question.<br />
+            • Each question awards 50 points
           </p>
           <button
             disabled={store === '' || store === null || alreadyTaken}
