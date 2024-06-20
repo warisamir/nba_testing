@@ -22,7 +22,8 @@ const ResultPage = () => {
   const handleClick = () => {
     // window.flutter_inappwebview.callHandler('MessageChannel', 'navigateToNewScreen');
     // Toaster.postMessage('buttonClicked');
-    window.location.href = 'onehub://callback';
+    // window.location.href = 'onehub://callback';
+    requestUri.scheme == 'onehub' && requestUri.host == 'callback'
   }
 
   const [rewardsData, setRewardsData] = useState(null);
